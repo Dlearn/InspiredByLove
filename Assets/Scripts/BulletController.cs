@@ -26,9 +26,10 @@ public class BulletController : MonoBehaviour {
         stakeClones = new GameObject[10];
         stakeStartingPositions = new Vector2[10];
         stakeEndingPositions = new Vector2[10];
-        //stakeStartingTimes = new float[10];
+        stakeStartingTimes = new float[10];
         curseStartingPositions = new Vector2[9];
         curseEndingPositions = new Vector2[9];
+        spikeClones = new GameObject[10];
         spikeStartingPositions = new Vector2[9];
         spikeEndingPositions = new Vector2[9];
 
@@ -53,6 +54,17 @@ public class BulletController : MonoBehaviour {
         stakeEndingPositions[7] = new Vector2(-384f, -512f);
         stakeEndingPositions[8] = new Vector2(512f, -512f);
         stakeEndingPositions[9] = new Vector2(256f, -512f);
+
+        stakeStartingTimes[0] = 1f;
+        stakeStartingTimes[1] = 1f;
+        stakeStartingTimes[2] = 1f;
+        stakeStartingTimes[3] = 1f;
+        stakeStartingTimes[4] = 1f;
+        stakeStartingTimes[5] = 1f;
+        stakeStartingTimes[6] = 1f;
+        stakeStartingTimes[7] = 1f;
+        stakeStartingTimes[8] = 1f;
+        stakeStartingTimes[9] = 1f;
 
         /*
         curseStartingPositions[0] = new Vector2(512f,-384f);
@@ -97,7 +109,7 @@ public class BulletController : MonoBehaviour {
         spikeEndingPositions[8] = new Vector2(-256f, 50f);
 
         for (int i = 0; i < stakeStartingPositions.Length; i++) {
-            //StartCoroutine(InstantiateStake(1f, i));
+            StartCoroutine(InstantiateStake(1f, i));
         }
         for (int i = 0; i < spikeStartingPositions.Length; i++)
         {
@@ -136,7 +148,7 @@ public class BulletController : MonoBehaviour {
         // Moving stake
         for (int i=0; i<stakeStartingPositions.Length; i++) { 
             if (stakeClones[i] != null) { 
-                stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, stakeEndingPositions[i], Time.deltaTime * 1000);
+                stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, stakeEndingPositions[i], Time.deltaTime * 500);
             }
         }
 
@@ -145,7 +157,7 @@ public class BulletController : MonoBehaviour {
         {
             if (spikeClones[i] != null)
             {
-                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 1000);
+                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 500);
             }
         }
     }
