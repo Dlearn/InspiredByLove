@@ -30,10 +30,10 @@ public class BulletController : MonoBehaviour {
         stakeStartingTimes = new float[6];
         curseStartingPositions = new Vector2[9];
         curseEndingPositions = new Vector2[9];
-        spikeClones = new GameObject[9];
-        spikeStartingPositions = new Vector2[9];
-        spikeEndingPositions = new Vector2[9];
-        spikeStartingTimes = new float[9];
+        spikeClones = new GameObject[6];
+        spikeStartingPositions = new Vector2[6];
+        spikeEndingPositions = new Vector2[6];
+        spikeStartingTimes = new float[6];
 
         stakeStartingPositions[0] = new Vector2(Random.Range(-256f, 128f), 640f);
 		stakeStartingPositions[1] = new Vector2(Random.Range(256f, -128f), 640f);
@@ -41,13 +41,17 @@ public class BulletController : MonoBehaviour {
 		stakeStartingPositions[3] = new Vector2(Random.Range(-256f, -384f), 640f);
 		stakeStartingPositions[4] = new Vector2(Random.Range(512f, 512f), 640f);
 		stakeStartingPositions[5] = new Vector2(Random.Range(-512f, -512f), 640f);
-        
+
 		stakeEndingPositions[0] = new Vector2(Random.Range(-512f, -256f),-512f);
 		stakeEndingPositions[1] = new Vector2(Random.Range(512f, 256f),-512f);
 		stakeEndingPositions[2] = new Vector2(Random.Range(-512f, -384f), -512f);
 		stakeEndingPositions[3] = new Vector2(Random.Range(512f, -384f), -512f);
 		stakeEndingPositions[4] = new Vector2(Random.Range(-512f, -256f), -512f);
 		stakeEndingPositions[5] = new Vector2(Random.Range(512f, 256f) , -512f);
+
+		for (int i = 0; i < stakeEndingPositions.Length; i++) {
+			stakeEndingPositions [i].y = stakeEndingPositions [i].y + 768/4;
+		}
 
         stakeStartingTimes[0] = 1f;
         stakeStartingTimes[1] = 5f;
@@ -77,26 +81,20 @@ public class BulletController : MonoBehaviour {
         curseEndingPositions[7] = new Vector2(-384f, -384f);
         curseEndingPositions[8] = new Vector2(-512f, -384f);
         */
-        
-        spikeStartingPositions[0] = new Vector2(512f, 384f);
-        spikeStartingPositions[1] = new Vector2(562f, 384f);
-        spikeStartingPositions[2] = new Vector2(462f, 384f);
-        spikeStartingPositions[3] = new Vector2(-512f, 384f);
-        spikeStartingPositions[4] = new Vector2(-562f, 384f);
-        spikeStartingPositions[5] = new Vector2(-462f, 384f);
-        spikeStartingPositions[6] = new Vector2(512f, 0f);
-        spikeStartingPositions[7] = new Vector2(512f, 50f);
-        spikeStartingPositions[8] = new Vector2(512f, -50f);
 
-        spikeEndingPositions[0] = new Vector2(-1024f, -768);
-        spikeEndingPositions[1] = new Vector2(-1024f, -768f);
-        spikeEndingPositions[2] = new Vector2(-1024f, -768f);
-        spikeEndingPositions[3] = new Vector2(1024f, -768f);
-        spikeEndingPositions[4] = new Vector2(1024f, -768f);
-        spikeEndingPositions[5] = new Vector2(1024f, -768f);
-        spikeEndingPositions[6] = new Vector2(-1024f, 0f);
-        spikeEndingPositions[7] = new Vector2(-256f, -50f);
-        spikeEndingPositions[8] = new Vector2(-256f, 50f);
+		spikeStartingPositions[0] = new Vector2(Random.Range(-562f, -462f), 384f);
+		spikeStartingPositions[1] = new Vector2(Random.Range(-562f, -462f), 384f);
+		spikeStartingPositions[2] = new Vector2(Random.Range(512f, 512f) , Random.Range(50f,-50f));
+		spikeStartingPositions[3] = new Vector2(Random.Range(-512f, -512f), Random.Range(50f,-50f));
+		spikeStartingPositions[4] = new Vector2(Random.Range(-512f, -512f), Random.Range(300f,-100f));
+		spikeStartingPositions[5] = new Vector2(Random.Range(512f, 512f), Random.Range(300f, -100f));
+
+		spikeEndingPositions[0] = new Vector2(Random.Range(-562f, -462f), -384f);
+		spikeEndingPositions[1] = new Vector2(Random.Range(562f, 462f), Random.Range(-384f, 384f));
+		spikeEndingPositions[2] = new Vector2(Random.Range(-512f, -512f), Random.Range(50f, -50f));
+		spikeEndingPositions[3] = new Vector2(Random.Range(512f, 512f), Random.Range(50f, -50f));
+		spikeEndingPositions[4] = new Vector2(spikeStartingPositions[4].x + 1024f, spikeStartingPositions[4].y);
+		spikeEndingPositions[5] = new Vector2(spikeStartingPositions[5].x + 1024f, spikeStartingPositions[5].y);
 
         spikeStartingTimes[0] = 1f;
         spikeStartingTimes[1] = 1f;
@@ -104,9 +102,6 @@ public class BulletController : MonoBehaviour {
         spikeStartingTimes[3] = 1f;
         spikeStartingTimes[4] = 1f;
         spikeStartingTimes[5] = 1f;
-        spikeStartingTimes[6] = 1f;
-        spikeStartingTimes[7] = 1f;
-        spikeStartingTimes[8] = 1f;
 
         for (int i = 0; i < stakeStartingPositions.Length; i++) {
             StartCoroutine(InstantiateStake(stakeStartingTimes[i], i));
@@ -140,8 +135,8 @@ public class BulletController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         // Moving stake
-        for (int i=0; i<stakeStartingPositions.Length; i++) { 
-            if (stakeClones[i] != null) { 
+        for (int i=0; i<stakeStartingPositions.Length; i++) {
+            if (stakeClones[i] != null) {
                 stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, stakeEndingPositions[i], Time.deltaTime * 400);
             }
         }
