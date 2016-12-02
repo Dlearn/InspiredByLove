@@ -2,49 +2,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
-	// Use this for initialization
-	public float speed;
-	private float actualDistance;
-	public float distance = 0f;
-	public bool useInitialCameraDistance = false;
-	private float finalX, finalY;
+public class PlayerController : MonoBehaviour
+{
+    // Use this for initialization
+    public float speed;
+    public bool flag = false;
 
-	private float radius = 250;
-	public float testing;
-	public GameObject buddy;
+    private float actualDistance;
+    public float distance = 0f;
+    public bool useInitialCameraDistance = false;
+    private float finalX, finalY;
 
-	void Start () {
+    private float radius = 250;
+    public float testing;
+    public GameObject buddy;
 
-		if (useInitialCameraDistance) {
-			Vector3 toObjectVector = transform.position - Camera.main.transform.position;
-			Vector3 linearDistanceVector = Vector3.Project (toObjectVector, Camera.main.transform.forward);
-			actualDistance = linearDistanceVector.magnitude;
-		} else {
-			actualDistance = distance;
-		}
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    void Start()
     {
 
-		Vector3 buddyPos = buddy.transform.position;
-		Vector3 mousePos = Input.mousePosition;
-		Vector3 finalV;
+        if (useInitialCameraDistance)
+        {
+            Vector3 toObjectVector = transform.position - Camera.main.transform.position;
+            Vector3 linearDistanceVector = Vector3.Project(toObjectVector, Camera.main.transform.forward);
+            actualDistance = linearDistanceVector.magnitude;
+        }
+        else
+        {
+            actualDistance = distance;
+        }
+    }
 
-		mousePos = Camera.main.ScreenToWorldPoint (mousePos);
-		mousePos.z = 0;
-		Vector3 temp = mousePos-buddyPos;
-		float dist = (temp).magnitude;
-		finalV = mousePos;
-		if (dist >= radius) {
-			// distance between the mouse ptr and buddy exceeds radius
-			// set the new ptr to within radius
-			finalV.x = (buddyPos.x + (temp.x / dist) * radius);
-			finalV.y = (buddyPos.y + (temp.y / dist) * radius);
-		}
+    // Update is called once per frame
+    void Update()
+    {
 
-		transform.position = finalV;
+        Vector3 buddyPos = buddy.transform.position;
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 finalV;
+
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        mousePos.z = 0;
+        Vector3 temp = mousePos - buddyPos;
+        float dist = (temp).magnitude;
+        finalV = mousePos;
+        if (dist >= radius)
+        {
+            // distance between the mouse ptr and buddy exceeds radius
+            // set the new ptr to within radius
+            finalV.x = (buddyPos.x + (temp.x / dist) * radius);
+            finalV.y = (buddyPos.y + (temp.y / dist) * radius);
+        }
+
+        transform.position = finalV;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("bullet"))
+        {
+            flag = true;
+            other.gameObject.SetActive(false);
+        }
     }
 }
