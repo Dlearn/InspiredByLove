@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public bool useInitialCameraDistance = false;
     private float finalX, finalY;
 
-    private float radius = 250;
+    private float radius = 200;
     public float testing;
     public GameObject buddy;
 
@@ -48,12 +48,12 @@ public class PlayerController : MonoBehaviour
 		Debug.Log (mousePos);
 		finalV.x = Mathf.Clamp (finalV.x, -512+32, 512-32);
 		finalV.y = Mathf.Clamp (finalV.y, -384+32, 384-32);
-        if (false)
+		if (dist >= radius)
         {
             // distance between the mouse ptr and buddy exceeds radius
             // set the new ptr to within radius
-            finalV.x = (buddyPos.x + (temp.x / dist) * radius);
-            finalV.y = (buddyPos.y + (temp.y / dist) * radius);
+			finalV.x = Mathf.Clamp((buddyPos.x + (temp.x / dist) * radius), -512+32, 512-32);
+			finalV.y = Mathf.Clamp((buddyPos.y + (temp.y / dist) * radius), -384+32, 384-32);
         }
 
         transform.position = finalV;
