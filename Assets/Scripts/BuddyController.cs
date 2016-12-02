@@ -29,4 +29,12 @@ public class BuddyController : MonoBehaviour {
 		GetComponent<Rigidbody2D>().velocity = movement*speed;
 		GetComponent<Rigidbody2D>().position = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().position.x, (-384+16), (384-16)), Mathf.Clamp(GetComponent<Rigidbody2D>().position.y, -128+16, 192-16));
 	}
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.gameObject.CompareTag("bullet"))
+		{
+			Destroy (other.gameObject);
+		}
+	}
 }

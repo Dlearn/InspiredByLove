@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         Vector3 temp = mousePos - buddyPos;
         float dist = (temp).magnitude;
         finalV = mousePos;
-		Debug.Log (mousePos);
+		//Debug.Log (mousePos);
 		finalV.x = Mathf.Clamp (finalV.x, -512+32, 512-32);
 		finalV.y = Mathf.Clamp (finalV.y, -384+32, 384-32);
 		if (dist >= radius)

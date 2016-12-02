@@ -20,51 +20,41 @@ public class BulletController : MonoBehaviour {
     Vector2[] curseEndingPositions;
     Vector2[] spikeStartingPositions;
     Vector2[] spikeEndingPositions;
+    float[] spikeStartingTimes;
 
     void Start () {
         // Initializing positions & timings
-        stakeClones = new GameObject[10];
-        stakeStartingPositions = new Vector2[10];
-        stakeEndingPositions = new Vector2[10];
-        stakeStartingTimes = new float[10];
+        stakeClones = new GameObject[6];
+        stakeStartingPositions = new Vector2[6];
+        stakeEndingPositions = new Vector2[6];
+        stakeStartingTimes = new float[6];
         curseStartingPositions = new Vector2[9];
         curseEndingPositions = new Vector2[9];
         spikeClones = new GameObject[10];
         spikeStartingPositions = new Vector2[9];
         spikeEndingPositions = new Vector2[9];
+        spikeStartingTimes = new float[9];
 
-        stakeStartingPositions[0] = new Vector2(-256f, 640f);
-        stakeStartingPositions[1] = new Vector2(-256f, 640f);
-        stakeStartingPositions[2] = new Vector2(128f, 640f);
-        stakeStartingPositions[3] = new Vector2(256f, 640f);
-        stakeStartingPositions[4] = new Vector2(256f, 640f);
-        stakeStartingPositions[5] = new Vector2(-128f, 640f);
-        stakeStartingPositions[6] = new Vector2(256f, 640f);
-        stakeStartingPositions[7] = new Vector2(384f, 640f);
-        stakeStartingPositions[8] = new Vector2(-256f, 640f);
-        stakeStartingPositions[9] = new Vector2(-384f, 640f);
+        stakeStartingPositions[0] = new Vector2(Random.Range(-256f, 128f), 640f);
+		stakeStartingPositions[1] = new Vector2(Random.Range(256f, -128f), 640f);
+		stakeStartingPositions[2] = new Vector2(Random.Range(256f, 384f), 640f);
+		stakeStartingPositions[3] = new Vector2(Random.Range(-256f, -384f), 640f);
+		stakeStartingPositions[4] = new Vector2(Random.Range(512f, 512f), 640f);
+		stakeStartingPositions[5] = new Vector2(Random.Range(-512f, -512f), 640f);
         
-        stakeEndingPositions[0] = new Vector2(-256f,-512f);
-        stakeEndingPositions[1] = new Vector2(0f,-512f);
-        stakeEndingPositions[2] = new Vector2(-200f, -512f);
-        stakeEndingPositions[3] = new Vector2(256f, -512f);
-        stakeEndingPositions[4] = new Vector2(0f, -512f);
-        stakeEndingPositions[5] = new Vector2(200f, -512f);
-        stakeEndingPositions[6] = new Vector2(-512f, -512f);
-        stakeEndingPositions[7] = new Vector2(-384f, -512f);
-        stakeEndingPositions[8] = new Vector2(512f, -512f);
-        stakeEndingPositions[9] = new Vector2(256f, -512f);
+		stakeEndingPositions[0] = new Vector2(Random.Range(-512f, -256f),-512f);
+		stakeEndingPositions[1] = new Vector2(Random.Range(512f, 256f),-512f);
+		stakeEndingPositions[2] = new Vector2(Random.Range(-512f, -384f), -512f);
+		stakeEndingPositions[3] = new Vector2(Random.Range(512f, -384f), -512f);
+		stakeEndingPositions[4] = new Vector2(Random.Range(-512f, -256f), -512f);
+		stakeEndingPositions[5] = new Vector2(Random.Range(512f, 256f) , -512f);
 
         stakeStartingTimes[0] = 1f;
-        stakeStartingTimes[1] = 1f;
-        stakeStartingTimes[2] = 1f;
-        stakeStartingTimes[3] = 1f;
-        stakeStartingTimes[4] = 1f;
-        stakeStartingTimes[5] = 1f;
-        stakeStartingTimes[6] = 1f;
-        stakeStartingTimes[7] = 1f;
-        stakeStartingTimes[8] = 1f;
-        stakeStartingTimes[9] = 1f;
+        stakeStartingTimes[1] = 5f;
+        stakeStartingTimes[2] = 9f;
+        stakeStartingTimes[3] = 13f;
+        stakeStartingTimes[4] = 17f;
+        stakeStartingTimes[5] = 21f;
 
         /*
         curseStartingPositions[0] = new Vector2(512f,-384f);
@@ -108,12 +98,22 @@ public class BulletController : MonoBehaviour {
         spikeEndingPositions[7] = new Vector2(-256f, -50f);
         spikeEndingPositions[8] = new Vector2(-256f, 50f);
 
+        spikeStartingTimes[0] = 1f;
+        spikeStartingTimes[1] = 1f;
+        spikeStartingTimes[2] = 1f;
+        spikeStartingTimes[3] = 1f;
+        spikeStartingTimes[4] = 1f;
+        spikeStartingTimes[5] = 1f;
+        spikeStartingTimes[6] = 1f;
+        spikeStartingTimes[7] = 1f;
+        spikeStartingTimes[8] = 1f;
+
         for (int i = 0; i < stakeStartingPositions.Length; i++) {
             StartCoroutine(InstantiateStake(stakeStartingTimes[i], i));
         }
         for (int i = 0; i < spikeStartingPositions.Length; i++)
         {
-            StartCoroutine(InstantiateSpike(1f, i));
+            StartCoroutine(InstantiateSpike(spikeStartingTimes[i], i));
         }
     }
     IEnumerator InstantiateStake(float time, int i)
