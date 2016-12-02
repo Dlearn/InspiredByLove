@@ -6,8 +6,14 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	public float speed;
 	private float actualDistance;
-	public float distance = 1.0f;
+	public float distance = 0f;
 	public bool useInitialCameraDistance = false;
+	private float finalX, finalY;
+
+	private float radius = 250;
+	public float testing;
+	public GameObject buddy;
+
 	void Start () {
 
 		if (useInitialCameraDistance) {
@@ -22,21 +28,23 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
 
-
+		Vector3 buddyPos = buddy.transform.position;
 		Vector3 mousePos = Input.mousePosition;
-		mousePos.z = actualDistance;
-		//transform.position = Camera.main.ScreenToWorldPoint (mousePos);
+		Vector3 finalV;
+
 		mousePos = Camera.main.ScreenToWorldPoint (mousePos);
+		mousePos.z = 0;
+		Vector3 temp = mousePos-buddyPos;
+		float dist = (temp).magnitude;
+		finalV = mousePos;
+		if (dist >= radius) {
+			// distance between the mouse ptr and buddy exceeds radius
+			// set the new ptr to within radius
+			finalV.x = (buddyPos.x + (temp.x / dist) * radius);
+			finalV.y = (buddyPos.y + (temp.y / dist) * radius);
+		}
 
-		Vector2 movement = new Vector2(mousePos.x, mousePos.y);
-
-        GetComponent<Rigidbody2D>().velocity = movement*speed;
-		GetComponent<Rigidbody2D>().position = new Vector2(GetComponent<Rigidbody2D>().position.x, GetComponent<Rigidbody2D>().position.y);
-		//GetComponent<Rigidbody2D>().position = new Vector2(mousePos.x, mousePos.y);
-		//transform.position = Vector2.Lerp(transform.position, mousePos, speed);
+		transform.position = finalV;
     }
 }
