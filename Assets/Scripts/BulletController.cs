@@ -109,7 +109,7 @@ public class BulletController : MonoBehaviour {
         spikeEndingPositions[8] = new Vector2(-256f, 50f);
 
         for (int i = 0; i < stakeStartingPositions.Length; i++) {
-            StartCoroutine(InstantiateStake(1f, i));
+            StartCoroutine(InstantiateStake(stakeStartingTimes[i], i));
         }
         for (int i = 0; i < spikeStartingPositions.Length; i++)
         {
@@ -148,7 +148,7 @@ public class BulletController : MonoBehaviour {
         // Moving stake
         for (int i=0; i<stakeStartingPositions.Length; i++) { 
             if (stakeClones[i] != null) { 
-                stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, stakeEndingPositions[i], Time.deltaTime * 500);
+                stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, stakeEndingPositions[i], Time.deltaTime * 300);
             }
         }
 
@@ -157,7 +157,7 @@ public class BulletController : MonoBehaviour {
         {
             if (spikeClones[i] != null)
             {
-                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 500);
+                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 300);
             }
         }
     }
