@@ -9,8 +9,10 @@ public class BuddyController : MonoBehaviour {
 	public float speed;
 	private int counter;
 	void Start () {
-		x = Random.value;
-		y = Random.value;
+		//x = Random.value;
+		//y = Random.value;
+		x = 1;
+		y = 1;
 		
 	}
 	
@@ -21,9 +23,10 @@ public class BuddyController : MonoBehaviour {
 			x = Random.value;
 			y = Random.value;
 			counter = 0;
-		} 
+		}
+
 		Vector2 movement = new Vector2 (x, y);
 		GetComponent<Rigidbody2D>().velocity = movement*speed;
-		GetComponent<Rigidbody2D>().position = new Vector2(GetComponent<Rigidbody2D>().position.x, GetComponent<Rigidbody2D>().position.y);
+		GetComponent<Rigidbody2D>().position = new Vector2(Mathf.Clamp(GetComponent<Rigidbody2D>().position.x, -512+16, 512-16), Mathf.Clamp(GetComponent<Rigidbody2D>().position.y, -384+16, 384-16));
 	}
 }

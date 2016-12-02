@@ -45,7 +45,10 @@ public class PlayerController : MonoBehaviour
         Vector3 temp = mousePos - buddyPos;
         float dist = (temp).magnitude;
         finalV = mousePos;
-        if (dist >= radius)
+		Debug.Log (mousePos);
+		finalV.x = Mathf.Clamp (finalV.x, -512+32, 512-32);
+		finalV.y = Mathf.Clamp (finalV.y, -384+32, 384-32);
+        if (false)
         {
             // distance between the mouse ptr and buddy exceeds radius
             // set the new ptr to within radius
