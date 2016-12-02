@@ -18,6 +18,7 @@ public class BulletController : MonoBehaviour {
     float[] stakeStartingTimes;
     Vector2[] curseStartingPositions;
     Vector2[] curseEndingPositions;
+    float[] curseStartingTimes;
     Vector2[] spikeStartingPositions;
     Vector2[] spikeEndingPositions;
     float[] spikeStartingTimes;
@@ -28,8 +29,10 @@ public class BulletController : MonoBehaviour {
         stakeStartingPositions = new Vector2[6];
         stakeEndingPositions = new Vector2[6];
         stakeStartingTimes = new float[6];
-        curseStartingPositions = new Vector2[9];
-        curseEndingPositions = new Vector2[9];
+        curseClones = new GameObject[8];
+        curseStartingPositions = new Vector2[8];
+        curseEndingPositions = new Vector2[8];
+        curseStartingTimes = new float[8];
         spikeClones = new GameObject[6];
         spikeStartingPositions = new Vector2[6];
         spikeEndingPositions = new Vector2[6];
@@ -60,29 +63,40 @@ public class BulletController : MonoBehaviour {
         stakeStartingTimes[4] = 17f;
         stakeStartingTimes[5] = 21f;
 
-        /*
-        curseStartingPositions[0] = new Vector2(512f,-384f);
-        curseStartingPositions[1] = new Vector2(384f, -384f);
-        curseStartingPositions[2] = new Vector2(256f, -384f);
-        curseStartingPositions[3] = new Vector2(128f, -384f);
-        curseStartingPositions[4] = new Vector2(0f, -384f);
-        curseStartingPositions[5] = new Vector2(-128f, -384f);
-        curseStartingPositions[6] = new Vector2(-256f, -384f);
-        curseStartingPositions[7] = new Vector2(-384f, -384f);
-        curseStartingPositions[8] = new Vector2(-512f, -384f);
+        curseStartingPositions[0] = new Vector2(Random.Range(-384f, 384f), -384f);
+        curseStartingPositions[1] = new Vector2(Random.Range(-384f, 384f), -384f);
+        curseStartingPositions[2] = new Vector2(Random.Range(-384f, 384f), -384f);
+        curseStartingPositions[3] = new Vector2(Random.Range(-384f, 384f), -384f);
+        curseStartingPositions[4] = new Vector2(Random.Range(-384f, 384f), -384f);
+        curseStartingPositions[5] = new Vector2(Random.Range(-384f, 384f), -384f);
+        curseStartingPositions[6] = new Vector2(Random.Range(-384f, 384f), -384f);
+        curseStartingPositions[7] = new Vector2(Random.Range(-384f, 384f), -384f);
 
-        curseEndingPositions[0] = new Vector2(512f, -384f);
-        curseEndingPositions[1] = new Vector2(384f, -384f);
-        curseEndingPositions[2] = new Vector2(256f, -384f);
-        curseEndingPositions[3] = new Vector2(128f, -384f);
-        curseEndingPositions[4] = new Vector2(0f, -384f);
-        curseEndingPositions[5] = new Vector2(-128f, -384f);
-        curseEndingPositions[6] = new Vector2(-256f, -384f);
-        curseEndingPositions[7] = new Vector2(-384f, -384f);
-        curseEndingPositions[8] = new Vector2(-512f, -384f);
-        */
+        Vector2[] possibleCurseEndpoints = new Vector2[4];
+        possibleCurseEndpoints[0] = new Vector2(-512f,0f);
+        possibleCurseEndpoints[1] = new Vector2(-512f,384f);
+        possibleCurseEndpoints[2] = new Vector2(512f,384f);
+        possibleCurseEndpoints[3] = new Vector2(512f,0f);
 
-		spikeStartingPositions[0] = new Vector2(Random.Range(-562f, -462f), 384f);
+        curseEndingPositions[0] = possibleCurseEndpoints[Random.Range(0,3)];
+        curseEndingPositions[1] = possibleCurseEndpoints[Random.Range(0, 3)];
+        curseEndingPositions[2] = possibleCurseEndpoints[Random.Range(0, 3)];
+        curseEndingPositions[3] = possibleCurseEndpoints[Random.Range(0, 3)];
+        curseEndingPositions[4] = possibleCurseEndpoints[Random.Range(0, 3)];
+        curseEndingPositions[5] = possibleCurseEndpoints[Random.Range(0, 3)];
+        curseEndingPositions[6] = possibleCurseEndpoints[Random.Range(0, 3)];
+        curseEndingPositions[7] = possibleCurseEndpoints[Random.Range(0, 3)];
+
+        curseStartingTimes[0] = 1f;
+        curseStartingTimes[1] = 2f;
+        curseStartingTimes[2] = 3f;
+        curseStartingTimes[3] = 4f;
+        curseStartingTimes[4] = 5f;
+        curseStartingTimes[5] = 6f;
+        curseStartingTimes[6] = 7f;
+        curseStartingTimes[7] = 8f;
+
+        spikeStartingPositions[0] = new Vector2(Random.Range(-562f, -462f), 384f);
 		spikeStartingPositions[1] = new Vector2(Random.Range(-562f, -462f), 384f);
 		spikeStartingPositions[2] = new Vector2(Random.Range(512f, 512f) , Random.Range(50f,-50f));
 		spikeStartingPositions[3] = new Vector2(Random.Range(-512f, -512f), Random.Range(50f,-50f));
@@ -97,18 +111,20 @@ public class BulletController : MonoBehaviour {
 		spikeEndingPositions[5] = new Vector2(spikeStartingPositions[5].x + 1024f, spikeStartingPositions[5].y);
 
         spikeStartingTimes[0] = 1f;
-        spikeStartingTimes[1] = 1f;
-        spikeStartingTimes[2] = 1f;
-        spikeStartingTimes[3] = 1f;
-        spikeStartingTimes[4] = 1f;
-        spikeStartingTimes[5] = 1f;
+        spikeStartingTimes[1] = 2f;
+        spikeStartingTimes[2] = 3f;
+        spikeStartingTimes[3] = 4f;
+        spikeStartingTimes[4] = 5f;
+        spikeStartingTimes[5] = 6f;
 
         for (int i = 0; i < stakeStartingPositions.Length; i++) {
-            StartCoroutine(InstantiateStake(stakeStartingTimes[i], i));
+            //StartCoroutine(InstantiateStake(stakeStartingTimes[i], i));
         }
-        for (int i = 0; i < spikeStartingPositions.Length; i++)
-        {
-            StartCoroutine(InstantiateSpike(spikeStartingTimes[i], i));
+        for (int i = 0; i < curseStartingPositions.Length; i++) {
+            StartCoroutine(InstantiateCurse(curseStartingTimes[i], i));
+        }
+        for (int i = 0; i < spikeStartingPositions.Length; i++) {
+            //StartCoroutine(InstantiateSpike(spikeStartingTimes[i], i));
         }
     }
     IEnumerator InstantiateStake(float time, int i) {
@@ -119,6 +135,19 @@ public class BulletController : MonoBehaviour {
         }
         else {
             stakeClones[i].transform.Rotate(new Vector3(0f, 0f, -Vector2.Angle(stakeStartingPositions[i] - stakeEndingPositions[i], Vector2.up)));
+        }
+    }
+    IEnumerator InstantiateCurse(float time, int i)
+    {
+        yield return new WaitForSeconds(time);
+        curseClones[i] = Instantiate(curse, curseStartingPositions[i], transform.rotation);
+        if ((curseStartingPositions[i] - curseEndingPositions[i]).x <= 0)
+        {
+            curseClones[i].transform.Rotate(new Vector3(0f, 0f, Vector2.Angle(curseStartingPositions[i] - curseEndingPositions[i], Vector2.left)));
+        }
+        else
+        {
+            curseClones[i].transform.Rotate(new Vector3(0f, 0f, -Vector2.Angle(curseStartingPositions[i] - curseEndingPositions[i], Vector2.right)));
         }
     }
     IEnumerator InstantiateSpike(float time, int i) {
@@ -137,16 +166,24 @@ public class BulletController : MonoBehaviour {
         // Moving stake
         for (int i=0; i<stakeStartingPositions.Length; i++) {
             if (stakeClones[i] != null) {
-                stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, stakeEndingPositions[i], Time.deltaTime * 400);
+                stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, stakeEndingPositions[i], Time.deltaTime * 300);
+            }
+        }
+
+        // Moving curse
+        for (int i = 0; i < curseStartingPositions.Length; i++)
+        {
+            if (curseClones[i] != null)
+            {
+                curseClones[i].transform.position = Vector2.MoveTowards(curseClones[i].transform.position, curseEndingPositions[i], Time.deltaTime * 300);
             }
         }
 
         // Moving spike
         for (int i = 0; i < spikeStartingPositions.Length; i++)
         {
-            if (spikeClones[i] != null)
-            {
-                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 400);
+            if (spikeClones[i] != null) {
+                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 300);
             }
         }
     }
