@@ -30,7 +30,7 @@ public class BulletController : MonoBehaviour {
         stakeStartingTimes = new float[6];
         curseStartingPositions = new Vector2[9];
         curseEndingPositions = new Vector2[9];
-        spikeClones = new GameObject[10];
+        spikeClones = new GameObject[9];
         spikeStartingPositions = new Vector2[9];
         spikeEndingPositions = new Vector2[9];
         spikeStartingTimes = new float[9];
@@ -77,7 +77,7 @@ public class BulletController : MonoBehaviour {
         curseEndingPositions[7] = new Vector2(-384f, -384f);
         curseEndingPositions[8] = new Vector2(-512f, -384f);
         */
-
+        
         spikeStartingPositions[0] = new Vector2(512f, 384f);
         spikeStartingPositions[1] = new Vector2(562f, 384f);
         spikeStartingPositions[2] = new Vector2(462f, 384f);
@@ -116,30 +116,24 @@ public class BulletController : MonoBehaviour {
             StartCoroutine(InstantiateSpike(spikeStartingTimes[i], i));
         }
     }
-    IEnumerator InstantiateStake(float time, int i)
-    {
+    IEnumerator InstantiateStake(float time, int i) {
         yield return new WaitForSeconds(time);
-
         stakeClones[i] = Instantiate(stake, stakeStartingPositions[i], transform.rotation);
-        if ((stakeStartingPositions[i] - stakeEndingPositions[i]).x <= 0)
-        {
+        if ((stakeStartingPositions[i] - stakeEndingPositions[i]).x <= 0) {
             stakeClones[i].transform.Rotate(new Vector3(0f, 0f, Vector2.Angle(stakeStartingPositions[i] - stakeEndingPositions[i], Vector2.up)));
         }
-        else
-        {
+        else {
             stakeClones[i].transform.Rotate(new Vector3(0f, 0f, -Vector2.Angle(stakeStartingPositions[i] - stakeEndingPositions[i], Vector2.up)));
         }
     }
-    IEnumerator InstantiateSpike(float time, int i)
-    {
+    IEnumerator InstantiateSpike(float time, int i) {
         yield return new WaitForSeconds(time);
-
         spikeClones[i] = Instantiate(spike, spikeStartingPositions[i], transform.rotation);
-        if ((spikeStartingPositions[i] - spikeEndingPositions[i]).x <= 0) {
-            spikeClones[i].transform.Rotate(new Vector3(0f, 0f, Vector2.Angle(spikeStartingPositions[i] - spikeEndingPositions[i], Vector2.up)));
+        if ((spikeEndingPositions[i] - spikeStartingPositions[i]).y > 0) {
+            spikeClones[i].transform.Rotate(new Vector3(0f, 0f, -Vector2.Angle(spikeEndingPositions[i] - spikeStartingPositions[i], Vector2.left)));
         }
         else {
-            spikeClones[i].transform.Rotate(new Vector3(0f, 0f, -Vector2.Angle(spikeStartingPositions[i] - spikeEndingPositions[i], Vector2.up)));
+            spikeClones[i].transform.Rotate(new Vector3(0f, 0f, Vector2.Angle(spikeEndingPositions[i] - spikeStartingPositions[i], Vector2.left)));
         }
     }
 
@@ -148,7 +142,7 @@ public class BulletController : MonoBehaviour {
         // Moving stake
         for (int i=0; i<stakeStartingPositions.Length; i++) { 
             if (stakeClones[i] != null) { 
-                stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, stakeEndingPositions[i], Time.deltaTime * 300);
+                stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, stakeEndingPositions[i], Time.deltaTime * 400);
             }
         }
 
@@ -157,7 +151,7 @@ public class BulletController : MonoBehaviour {
         {
             if (spikeClones[i] != null)
             {
-                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 300);
+                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 400);
             }
         }
     }
