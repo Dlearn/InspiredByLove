@@ -118,13 +118,13 @@ public class BulletController : MonoBehaviour {
         spikeStartingTimes[5] = 6f;
 
         for (int i = 0; i < stakeStartingPositions.Length; i++) {
-            //StartCoroutine(InstantiateStake(stakeStartingTimes[i], i));
+            StartCoroutine(InstantiateStake(stakeStartingTimes[i], i));
         }
         for (int i = 0; i < curseStartingPositions.Length; i++) {
             StartCoroutine(InstantiateCurse(curseStartingTimes[i], i));
         }
         for (int i = 0; i < spikeStartingPositions.Length; i++) {
-            //StartCoroutine(InstantiateSpike(spikeStartingTimes[i], i));
+            StartCoroutine(InstantiateSpike(spikeStartingTimes[i], i));
         }
     }
     IEnumerator InstantiateStake(float time, int i) {
