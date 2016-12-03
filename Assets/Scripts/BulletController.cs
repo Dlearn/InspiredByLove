@@ -53,7 +53,7 @@ public class BulletController : MonoBehaviour {
 		stakeEndingPositions[5] = new Vector2(Random.Range(512f, 256f) , -512f);
 
 		for (int i = 0; i < stakeEndingPositions.Length; i++) {
-			stakeEndingPositions [i].y = stakeEndingPositions [i].y + 768/4;
+			stakeEndingPositions [i].y = stakeEndingPositions [i].y - 768/8;
 		}
 
         stakeStartingTimes[0] = 1f;
@@ -117,8 +117,27 @@ public class BulletController : MonoBehaviour {
         spikeStartingTimes[4] = 5f;
         spikeStartingTimes[5] = 6f;
 
+		for (int i = 0; i < stakeStartingPositions.Length; i++) {
+			Debug.Log (spikeEndingPositions [i]);
+		}
+
         for (int i = 0; i < stakeStartingPositions.Length; i++) {
-            StartCoroutine(InstantiateStake(stakeStartingTimes[i], i));
+			int choice = Random.Range (1, 20);
+			int index;
+			if (1 <= choice  && choice <= 2) {
+				index = 0;
+			} else if (3 <= choice && choice <= 4) {
+				index = 1;
+			} else if (5 <= choice && choice <= 7) {
+				index = 2;
+			} else if (8 <= choice && choice <= 10) {
+				index = 3;
+			} else if (11 <= choice && choice <= 15) {
+				index = 4;
+			} else { 
+				index = 5;
+			}
+            StartCoroutine(InstantiateStake(stakeStartingTimes[i], index));
         }
         for (int i = 0; i < curseStartingPositions.Length; i++) {
             StartCoroutine(InstantiateCurse(curseStartingTimes[i], i));
@@ -186,5 +205,14 @@ public class BulletController : MonoBehaviour {
                 spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 300);
             }
         }
+
+		for (int i = 0; i < stakeEndingPositions.Length; i++) {
+			if (stakeClones [i] != null) {
+				Vector2 pos = stakeClones [i].transform.position;
+				if (pos == stakeEndingPositions [i]) {
+					stakeClones [i].tag = "bulletStationary";
+				}
+			}
+		}
     }
 }

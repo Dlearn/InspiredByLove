@@ -8,11 +8,13 @@ public class BuddyController : MonoBehaviour {
 	private float x,y;
 	public float speed;
 	private int counter;
+	private int polarity;
 	void Start () {
 		//x = Random.value;
 		//y = Random.value;
 		x = -1;
 		y = -1;
+		polarity = -1;
 		
 	}
 	
@@ -20,8 +22,9 @@ public class BuddyController : MonoBehaviour {
 	void Update () {
 		counter++;
 		if (counter == 60) {
-			x = Random.value;
-			y = Random.value;
+			x = polarity * Random.value;
+			y = polarity * Random.value;
+			polarity = polarity * -1;
 			counter = 0;
 		}
 

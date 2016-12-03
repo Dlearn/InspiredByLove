@@ -66,5 +66,10 @@ public class PlayerController : MonoBehaviour
             flag = true;
             other.gameObject.SetActive(false);
         }
+
+		if (other.gameObject.CompareTag ("bulletStationary")) {
+			flag = true;
+			Destroy (other.gameObject);
+		}
     }
 }
