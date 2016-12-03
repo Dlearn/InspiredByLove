@@ -72,6 +72,7 @@ public class BulletController : MonoBehaviour {
          *     x x x x x x x x x x x
          *     29  31  33  35  37  39
          * */
+
         positions = new Vector2[40];
         for (int i = 0; i < 11; i++)
         {
@@ -99,31 +100,47 @@ public class BulletController : MonoBehaviour {
         for (int i = 0; i < 5; i++) {
             StartCoroutine(InstantiateSpike(7+i, 2*i + 18, 2*i + 17));
         }
-        */
-
-        // Stanley 1.0
-        // Make a spiral
+        */        
+        
         for (int i = 0; i < 11; i++)
         {
-            StartCoroutine(InstantiateSpike(i / 2f + 3, 39 - i, i));
+            StartCoroutine(InstantiateChase(i / 2f + 3, i));
         }
+    }
 
-        StartCoroutine(InstantiateStake(1, 0, 30));
-        StartCoroutine(InstantiateStake(1, 10, 38));
+    private void Spiral(float startTime)
+    {
+        for (int i = 0; i < 11; i++)
+        {
+            StartCoroutine(InstantiateSpike(i / 2f + startTime, 39 - i, i));
+        }
+    }
+
+    private void BoxSqueeze(float startTime)
+    {
+        StartCoroutine(InstantiateStake(startTime, 0, 30));
+        StartCoroutine(InstantiateStake(startTime, 10, 38));
         for (int i = 0; i < 4; i++)
         {
-            StartCoroutine(InstantiateStake(2 * i + 3, 2 * i + 11, 31 + i));
-            StartCoroutine(InstantiateStake(2 * i + 3, 2 * i + 12, 37 - i));
+            StartCoroutine(InstantiateStake(2 * i + startTime + 2, 2 * i + 11, 31 + i));
+            StartCoroutine(InstantiateStake(2 * i + startTime + 2, 2 * i + 12, 37 - i));
         }
+    }
+
+    private void TopStab(float startTime)
+    {
         for (int i = 0; i < 5; i++)
         {
-            StartCoroutine(InstantiateSpike(2 + i + 2, 2 * i + 12, 2 * i + 11));
-            StartCoroutine(InstantiateSpike(2 + i + 2, 2 * i + 11, 2 * i + 12));
+            StartCoroutine(InstantiateSpike(2 + i + startTime, 2 * i + 12, 2 * i + 11));
+            StartCoroutine(InstantiateSpike(2 + i + startTime, 2 * i + 11, 2 * i + 12));
         }
+    }
 
-        for (int i = 0; i < 11; i++)
+    private void AdvancedBox(float startTime)
+    {
+        for (int i = 0; i < 5; i++)
         {
-            StartCoroutine(InstantiateChase(i / 2f + 3, 39 - i));
+            StartCoroutine(InstantiateStake(startTime, 0, 30));
         }
     }
 
