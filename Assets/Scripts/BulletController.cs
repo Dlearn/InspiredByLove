@@ -100,11 +100,6 @@ public class BulletController : MonoBehaviour {
             StartCoroutine(InstantiateSpike(7+i, 2*i + 18, 2*i + 17));
         }
         */
-
-        for (int i = 0; i < 11; i++)
-        {
-            StartCoroutine(InstantiateChase(i / 2f + 3, i));
-        }
         
     }
 
@@ -138,8 +133,6 @@ public class BulletController : MonoBehaviour {
 
     private void AdvancedBox(float startTime)
     {
-        for (int i = 0; i < 5; i++)
-        {
             StartCoroutine(InstantiateStake(startTime, 14, 13));
             StartCoroutine(InstantiateStake(startTime, 17, 18));
             StartCoroutine(InstantiateStake(startTime, 22, 21));
@@ -156,6 +149,20 @@ public class BulletController : MonoBehaviour {
             StartCoroutine(InstantiateStake(startTime + 8, 33, 4));
             StartCoroutine(InstantiateStake(startTime + 8, 35, 6));
             StartCoroutine(InstantiateStake(startTime + 8, 38, 9));
+    }
+
+    private void LineOfChasers(float startTime) {
+        for (int i = 0; i < 11; i++)
+        {
+            StartCoroutine(InstantiateChase(i / 2f + startTime, i));
+        }
+    }
+
+    private void DoubleUp()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+
         }
     }
 
