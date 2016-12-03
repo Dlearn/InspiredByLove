@@ -93,7 +93,7 @@ public class GameController : MonoBehaviour
     {
         if (!gameOver)
         {
-            scoreText.text = "Score: " + score++;
+            scoreText.text = "Score: " + score++/100 +"0";
         }
         if (gameOver && Input.GetKeyDown(KeyCode.Space))
         {
@@ -114,9 +114,10 @@ public class GameController : MonoBehaviour
         gameOver = true;
         restartText.text = "Press 'Space' to restart the game";
         GameObject background = GameObject.FindGameObjectWithTag("Background");
-        gameOverText.text = "Game Over!";
+        gameOverText.text = lovequote;
         SpriteRenderer sr = background.GetComponent<SpriteRenderer>();
-		audio.Stop ();
+        sr.color = Color.black;
+        audio.Stop ();
 		audio.clip = endSound;
 		audio.Play ();
         sr.color = Color.black;
