@@ -225,11 +225,20 @@ public class BulletController : MonoBehaviour {
                 stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, positions[stakeDestinations[i]], Time.deltaTime * 200);
             }
         }
+        // Moving spike
         for (int i = 0; i < spikeCounter; i++)
         {
             if (spikeClones[i] != null)
             {
                 spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, positions[spikeDestinations[i]], Time.deltaTime * 200);
+            }
+        }
+        // Moving chaser
+        for (int i = 0; i < chaseCounter; i++)
+        {
+            if (chaseClones[i] != null)
+            {
+                chaseClones[i].transform.position = Vector2.MoveTowards(chaseClones[i].transform.position, chaseDestinations[i], Time.deltaTime * 200);
             }
         }
         /*
