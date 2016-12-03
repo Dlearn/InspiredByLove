@@ -187,6 +187,7 @@ public class BulletController : MonoBehaviour {
         chaseClones[chaseCounter] = Instantiate(chase, positions[startPoint], transform.rotation);
         chaseDestinations[chaseCounter] = ((Vector2) player.transform.position - positions[startPoint]).normalized * 1024f;
 
+		audio.PlayOneShot (impact, 0.5f);
         if ((positions[startPoint] - chaseDestinations[chaseCounter]).x <= 0)
         {
             chaseClones[chaseCounter].transform.Rotate(new Vector3(0f, 0f, Vector2.Angle(positions[startPoint] - chaseDestinations[chaseCounter], Vector2.up)));
