@@ -89,7 +89,8 @@ public class BulletController : MonoBehaviour {
             StartCoroutine(InstantiateSpike(7+i, 2*i + 18, 2*i + 17));
         }
         */
-        
+
+        /*
         // Stanley 1.0
         // Make a spiral
         for (int i = 0; i < 11; i++)
@@ -109,7 +110,12 @@ public class BulletController : MonoBehaviour {
             StartCoroutine(InstantiateSpike(2 + i + 2, 2 * i + 12, 2 * i + 11));
             StartCoroutine(InstantiateSpike(2 + i + 2, 2 * i + 11, 2 * i + 12));
         }
-        
+        */
+
+        for (int i = 0; i < 11; i++)
+        {
+            StartCoroutine(InstantiateChase(i / 2f + 3, 39 - i));
+        }
     }
     IEnumerator InstantiateStake(float startTime, int startPoint, int endPoint) {
         yield return new WaitForSeconds(startTime);
@@ -151,7 +157,7 @@ public class BulletController : MonoBehaviour {
         yield return new WaitForSeconds(startTime);
 
         chaseClones[chaseCounter] = Instantiate(chase, positions[startPoint], transform.rotation);
-        chaseDestinations[chaseCounter] = ((Vector2) player.transform.position - positions[startPoint]).normalized * 1024f;
+        chaseDestinations[chaseCounter] = ((Vector2) player.transform.position - positions[startPoint]).normalized * 512f;
 
         if ((positions[startPoint] - chaseDestinations[chaseCounter]).x <= 0)
         {
@@ -174,11 +180,22 @@ public class BulletController : MonoBehaviour {
                 stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, positions[stakeDestinations[i]], Time.deltaTime * 200);
             }
         }
+
+        // Moving spike
         for (int i = 0; i < spikeCounter; i++)
         {
             if (spikeClones[i] != null)
             {
                 spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, positions[spikeDestinations[i]], Time.deltaTime * 200);
+            }
+        }
+
+        // Moving chase
+        for (int i = 0; i < chaseCounter; i++)
+        {
+            if (chaseClones[i] != null)
+            {
+                chaseClones[i].transform.position = Vector2.MoveTowards(chaseClones[i].transform.position, chaseDestinations[i], Time.deltaTime * 200);
             }
         }
 
