@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     private bool restart;
 
     public System.String lovequote;
+	public AudioClip endSound;
 
     // Use this for initialization
     void Start()
@@ -84,6 +85,7 @@ public class GameController : MonoBehaviour
         if (player.flag)
         {
             GameOver();
+			player.flag = false;
         }
     }
 
@@ -94,7 +96,12 @@ public class GameController : MonoBehaviour
         gameOver = true;
         restartText.text = "Press 'Space' to restart the game";
         GameObject background = GameObject.FindGameObjectWithTag("Background");
+        gameOverText.text = "Game Over!";
         SpriteRenderer sr = background.GetComponent<SpriteRenderer>();
+		AudioSource audio = GetComponent<AudioSource>();
+		audio.Stop ();
+		audio.clip = endSound;
+		audio.Play ();
         sr.color = Color.black;
         // GetComponent<SpriteRenderer>.color = Color.black;
 

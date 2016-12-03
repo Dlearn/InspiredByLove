@@ -10,6 +10,14 @@ public class BulletController : MonoBehaviour {
     public GameObject chase;
     public GameObject player;
 
+    // audio files
+	public AudioClip impact;
+	public AudioClip stackLanded;
+	public AudioClip blocked;
+	public AudioClip spikeSound;
+
+	AudioSource audio;
+
     // Stakes
     GameObject[] stakeClones;
     int[] stakeDestinations;
@@ -31,8 +39,11 @@ public class BulletController : MonoBehaviour {
 
     Vector2[] positions;
 
+    
     void Start()
     {
+        audio = gameObject.GetComponent<AudioSource>();
+
         stakeCounter = 0;
         stakeClones = new GameObject[999];
         stakeDestinations = new int[999];
@@ -48,7 +59,7 @@ public class BulletController : MonoBehaviour {
         // Initializing positions & timings
         /* Grid to allocate start and ending positions
          *     0 1 2 3 4 5 6 7 8 9 10
-         *     x x x x x x x x x x x 
+         *     x x x x x x x x x x x
          * 11  x                   x 12
          * 13  x                   x ...
          * 15  x                   x
@@ -83,14 +94,13 @@ public class BulletController : MonoBehaviour {
         {
             StartCoroutine(InstantiateStake(3+i, i + 6, i + 32));
         }
-        
+
         // Make a cascade of eastern spikes
         for (int i = 0; i < 5; i++) {
             StartCoroutine(InstantiateSpike(7+i, 2*i + 18, 2*i + 17));
         }
         */
 
-        /*
         // Stanley 1.0
         // Make a spiral
         for (int i = 0; i < 11; i++)
@@ -110,20 +120,20 @@ public class BulletController : MonoBehaviour {
             StartCoroutine(InstantiateSpike(2 + i + 2, 2 * i + 12, 2 * i + 11));
             StartCoroutine(InstantiateSpike(2 + i + 2, 2 * i + 11, 2 * i + 12));
         }
-        */
 
         for (int i = 0; i < 11; i++)
         {
             StartCoroutine(InstantiateChase(i / 2f + 3, 39 - i));
         }
     }
+
     IEnumerator InstantiateStake(float startTime, int startPoint, int endPoint) {
         yield return new WaitForSeconds(startTime);
-        
+
         // Bulletpool code
         stakeClones[stakeCounter] = Instantiate(stake, positions[startPoint], transform.rotation);
         stakeDestinations[stakeCounter] = endPoint;
-        
+		audio.PlayOneShot (stackLanded, 1.0f);
         if ((positions[startPoint] - positions[endPoint]).x <= 0) {
             stakeClones[stakeCounter].transform.Rotate(new Vector3(0f, 0f, Vector2.Angle(positions[startPoint] - positions[endPoint], Vector2.up)));
         }
@@ -140,6 +150,7 @@ public class BulletController : MonoBehaviour {
         // Bulletpool code
         spikeClones[spikeCounter] = Instantiate(spike, positions[startPoint], transform.rotation);
         spikeDestinations[spikeCounter] = endPoint;
+		audio.PlayOneShot (spikeSound, 1);
 
         if ((positions[startPoint] - positions[endPoint]).x <= 0)
         {
@@ -198,30 +209,5 @@ public class BulletController : MonoBehaviour {
                 chaseClones[i].transform.position = Vector2.MoveTowards(chaseClones[i].transform.position, chaseDestinations[i], Time.deltaTime * 200);
             }
         }
-
-        // Moving curse
-        /*
-        for (int i = 0; i < cursepositions.Length; i++)
-        {
-
-        }
-
-        // Moving spike
-        for (int i = 0; i < spikepositions.Length; i++)
-        {
-            if (spikeClones[i] != null) {
-                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 300);
-            }
-        }
-
-        for (int i = 0; i < stakeEndingPositions.Length; i++) {
-            if (stakeClones [i] != null) {
-                Vector2 pos = stakeClones [i].transform.position;
-                if (pos == stakeEndingPositions [i]) {
-                    stakeClones [i].tag = "bulletStationary";
-                }
-            }
-        }
-        */
     }
-    }
+}
