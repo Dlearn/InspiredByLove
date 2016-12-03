@@ -100,7 +100,7 @@ public class BulletController : MonoBehaviour {
             StartCoroutine(InstantiateSpike(7+i, 2*i + 18, 2*i + 17));
         }
         */
-        
+        DoubleUp(0);
     }
 
     private void Spiral(float startTime)
@@ -126,8 +126,8 @@ public class BulletController : MonoBehaviour {
     {
         for (int i = 0; i < 5; i++)
         {
-            StartCoroutine(InstantiateSpike(2 + i + startTime, 2 * i + 12, 2 * i + 11));
-            StartCoroutine(InstantiateSpike(2 + i + startTime, 2 * i + 11, 2 * i + 12));
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 2 * i + 12, 2 * i + 11));
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 2 * i + 11, 2 * i + 12));
         }
     }
 
@@ -158,11 +158,27 @@ public class BulletController : MonoBehaviour {
         }
     }
 
-    private void DoubleUp()
+    private void DoubleUp(float startTime)
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 2; i++)
         {
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 31, 2));
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 4, 33));
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 35, 6));
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 8, 37));
+        }
 
+        StartCoroutine(InstantiateSpike(4 + startTime, 34, 6));
+        StartCoroutine(InstantiateSpike(4 + startTime, 34, 4));
+        StartCoroutine(InstantiateSpike(4 + startTime, 5, 35));
+        StartCoroutine(InstantiateSpike(4 + startTime, 5, 33));
+
+        for (int i = 3; i < 5; i++)
+        {
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 2, 13));
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 33, 4));
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 6, 35));
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 37, 8));
         }
     }
 
