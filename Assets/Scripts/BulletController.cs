@@ -6,8 +6,9 @@ public class BulletController : MonoBehaviour {
 
     // public variables to be assigned in the editor
     public GameObject stake;
-    public GameObject curse;
     public GameObject spike;
+    public GameObject chase;
+    public GameObject player;
 
 	// audio files
 	public AudioClip impact;
@@ -27,6 +28,11 @@ public class BulletController : MonoBehaviour {
     int[] spikeDestinations;
     int spikeCounter = 0;
 
+    // Chase
+    GameObject[] chaseClones;
+    Vector2[] chaseDestinations;
+    int chaseCounter = 0;
+
     // Game Dimensions
     float HEIGHT = 768;
     float WIDTH = 1024;
@@ -37,6 +43,8 @@ public class BulletController : MonoBehaviour {
 		GameObject camera = GameObject.FindGameObjectWithTag ("MainCamera");
 		audio = camera.GetComponent<AudioSource> ();
 
+    void Start()
+    {
         stakeCounter = 0;
         stakeClones = new GameObject[999];
         stakeDestinations = new int[999];
@@ -45,10 +53,14 @@ public class BulletController : MonoBehaviour {
         spikeClones = new GameObject[999];
         spikeDestinations = new int[999];
 
+        chaseCounter = 0;
+        chaseClones = new GameObject[999];
+        chaseDestinations = new Vector2[999];
+
         // Initializing positions & timings
         /* Grid to allocate start and ending positions
          *     0 1 2 3 4 5 6 7 8 9 10
-         *     x x x x x x x x x x x 
+         *     x x x x x x x x x x x
          * 11  x                   x 12
          * 13  x                   x ...
          * 15  x                   x
@@ -62,37 +74,58 @@ public class BulletController : MonoBehaviour {
          *     29  31  33  35  37  39
          * */
         positions = new Vector2[40];
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 11; i++)
+        {
             // Top row positions
-            positions[i] = new Vector2((i - 1) * WIDTH/8 - WIDTH/2, HEIGHT * 5/8);
+            positions[i] = new Vector2((i - 1) * WIDTH / 8 - WIDTH / 2, HEIGHT * 5 / 8);
             // Bottom row positions
-            positions[i + 29] = new Vector2((i - 1) * WIDTH / 8 - WIDTH / 2, -HEIGHT * 5/8);
+            positions[i + 29] = new Vector2((i - 1) * WIDTH / 8 - WIDTH / 2, -HEIGHT * 5 / 8);
         }
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 9; i++)
+        {
             // Left column positions
-            positions[2 * i + 11] = new Vector2(-WIDTH * 5 / 8, i * HEIGHT / 8 - HEIGHT / 2);
+            positions[2 * i + 11] = new Vector2(-WIDTH * 5 / 8, (4 - i) * HEIGHT / 8);
             // Right column positions
-            positions[2 * i + 12] = new Vector2(WIDTH * 5 / 8, i * HEIGHT / 8 - HEIGHT / 2);
+            positions[2 * i + 12] = new Vector2(WIDTH * 5 / 8, (4 - i) * HEIGHT / 8);
         }
 
-        // Make a cascade of northwestern stakes
+        /*
+        // Make a cascade of southwestern stakes
         for (int i = 0; i < 5; i++)
         {
-            StartCoroutine(InstantiateStake(i, i + 6, i + 32));
+            StartCoroutine(InstantiateStake(3+i, i + 6, i + 32));
         }
 
-        // Make a cascade of eastern stakes
-        for (int i = 0; i < 6; i++)
-        {
-            Debug.Log(2*i + 17);
-            Debug.Log(positions[2*i + 17]);
-            
-            StartCoroutine(InstantiateSpike(i+6, 2*i + 17, 2*i + 18));
+        // Make a cascade of eastern spikes
+        for (int i = 0; i < 5; i++) {
+            StartCoroutine(InstantiateSpike(7+i, 2*i + 18, 2*i + 17));
         }
+        */
+
+        // Stanley 1.0
+        // Make a spiral
+        for (int i = 0; i < 11; i++)
+        {
+            StartCoroutine(InstantiateSpike(i / 2f + 3, 39 - i, i));
+        }
+
+        StartCoroutine(InstantiateStake(1, 0, 30));
+        StartCoroutine(InstantiateStake(1, 10, 38));
+        for (int i = 0; i < 4; i++)
+        {
+            StartCoroutine(InstantiateStake(2 * i + 3, 2 * i + 11, 31 + i));
+            StartCoroutine(InstantiateStake(2 * i + 3, 2 * i + 12, 37 - i));
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            StartCoroutine(InstantiateSpike(2 + i + 2, 2 * i + 12, 2 * i + 11));
+            StartCoroutine(InstantiateSpike(2 + i + 2, 2 * i + 11, 2 * i + 12));
+        }
+
     }
     IEnumerator InstantiateStake(float startTime, int startPoint, int endPoint) {
         yield return new WaitForSeconds(startTime);
-        
+
         // Bulletpool code
         stakeClones[stakeCounter] = Instantiate(stake, positions[startPoint], transform.rotation);
         stakeDestinations[stakeCounter] = endPoint;
@@ -126,6 +159,24 @@ public class BulletController : MonoBehaviour {
         spikeCounter++;
     }
 
+    IEnumerator InstantiateChase(float startTime, int startPoint)
+    {
+        yield return new WaitForSeconds(startTime);
+
+        chaseClones[chaseCounter] = Instantiate(chase, positions[startPoint], transform.rotation);
+        chaseDestinations[chaseCounter] = ((Vector2) player.transform.position - positions[startPoint]).normalized * 1024f;
+
+        if ((positions[startPoint] - chaseDestinations[chaseCounter]).x <= 0)
+        {
+            chaseClones[chaseCounter].transform.Rotate(new Vector3(0f, 0f, Vector2.Angle(positions[startPoint] - chaseDestinations[chaseCounter], Vector2.up)));
+        }
+        else
+        {
+            chaseClones[chaseCounter].transform.Rotate(new Vector3(0f, 0f, -Vector2.Angle(positions[startPoint] - chaseDestinations[chaseCounter], Vector2.up)));
+        }
+        chaseCounter++;
+    }
+
     // Update is called once per frame
     void Update () {
         // Moving stake
@@ -133,14 +184,14 @@ public class BulletController : MonoBehaviour {
         {
             if (stakeClones[i] != null)
             {
-                stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, positions[stakeDestinations[i]], Time.deltaTime * 300);
+                stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, positions[stakeDestinations[i]], Time.deltaTime * 200);
             }
         }
         for (int i = 0; i < spikeCounter; i++)
         {
             if (spikeClones[i] != null)
             {
-                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, positions[spikeDestinations[i]], Time.deltaTime * 300);
+                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, positions[spikeDestinations[i]], Time.deltaTime * 200);
             }
         }
 
