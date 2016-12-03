@@ -9,6 +9,14 @@ public class BulletController : MonoBehaviour {
     public GameObject curse;
     public GameObject spike;
 
+	// audio files
+	public AudioClip impact;
+	public AudioClip stackLanded;
+	public AudioClip blocked;
+	public AudioClip spikeSound;
+
+	AudioSource audio;
+
     // Stakes
     GameObject[] stakeClones;
     int[] stakeDestinations;
@@ -26,6 +34,9 @@ public class BulletController : MonoBehaviour {
     Vector2[] positions;
 
     void Start() {
+		GameObject camera = GameObject.FindGameObjectWithTag ("MainCamera");
+		audio = camera.GetComponent<AudioSource> ();
+
         stakeCounter = 0;
         stakeClones = new GameObject[999];
         stakeDestinations = new int[999];
@@ -85,7 +96,7 @@ public class BulletController : MonoBehaviour {
         // Bulletpool code
         stakeClones[stakeCounter] = Instantiate(stake, positions[startPoint], transform.rotation);
         stakeDestinations[stakeCounter] = endPoint;
-        
+		audio.PlayOneShot (stackLanded, 1.0f);
         if ((positions[startPoint] - positions[endPoint]).x <= 0) {
             stakeClones[stakeCounter].transform.Rotate(new Vector3(0f, 0f, Vector2.Angle(positions[startPoint] - positions[endPoint], Vector2.up)));
         }
@@ -102,6 +113,7 @@ public class BulletController : MonoBehaviour {
         // Bulletpool code
         spikeClones[spikeCounter] = Instantiate(spike, positions[startPoint], transform.rotation);
         spikeDestinations[spikeCounter] = endPoint;
+		audio.PlayOneShot (spikeSound, 1);
 
         if ((positions[startPoint] - positions[endPoint]).x <= 0)
         {

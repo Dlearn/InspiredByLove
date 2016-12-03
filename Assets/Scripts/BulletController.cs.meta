@@ -1,10 +1,17 @@
 fileFormatVersion: 2
 guid: cd5d92d11f672394a975ab267fcffc92
-timeCreated: 1480696973
+timeCreated: 1480740689
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - stake: {instanceID: 0}
+  - curse: {instanceID: 0}
+  - spike: {instanceID: 0}
+  - impact: {fileID: 8300000, guid: 18993cb32ec9b452a9b054772812be6f, type: 3}
+  - stackLanded: {fileID: 8300000, guid: c15897794288840e79fccc5dfcd32e30, type: 3}
+  - blocked: {fileID: 8300000, guid: 0514909ca141e664e8d1ed2f2c824db7, type: 3}
+  - spikeSound: {fileID: 8300000, guid: 3baa1c1c8326640c690897ebf1970d17, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
