@@ -10,7 +10,7 @@ public class BulletController : MonoBehaviour {
     public GameObject chase;
     public GameObject player;
 
-    // audio files
+	// audio files
 	public AudioClip impact;
 	public AudioClip stackLanded;
 	public AudioClip blocked;
@@ -39,10 +39,9 @@ public class BulletController : MonoBehaviour {
 
     Vector2[] positions;
 
-    
-    void Start()
-    {
-        audio = gameObject.GetComponent<AudioSource>();
+    void Start() {
+		GameObject camera = GameObject.FindGameObjectWithTag ("MainCamera");
+		audio = camera.GetComponent<AudioSource> ();
 
         stakeCounter = 0;
         stakeClones = new GameObject[999];
@@ -150,7 +149,8 @@ public class BulletController : MonoBehaviour {
         // Bulletpool code
         stakeClones[stakeCounter] = Instantiate(stake, positions[startPoint], transform.rotation);
         stakeDestinations[stakeCounter] = endPoint;
-		audio.PlayOneShot (stackLanded, 1.0f);
+		//stakeClones [stakeCounter].transform.localScale += new Vector3 (0, 1, 0);
+		audio.PlayOneShot (stackLanded, 0.5f);
         if ((positions[startPoint] - positions[endPoint]).x <= 0) {
             stakeClones[stakeCounter].transform.Rotate(new Vector3(0f, 0f, Vector2.Angle(positions[startPoint] - positions[endPoint], Vector2.up)));
         }
@@ -167,7 +167,7 @@ public class BulletController : MonoBehaviour {
         // Bulletpool code
         spikeClones[spikeCounter] = Instantiate(spike, positions[startPoint], transform.rotation);
         spikeDestinations[spikeCounter] = endPoint;
-		audio.PlayOneShot (spikeSound, 1);
+		audio.PlayOneShot (spikeSound, 0.5f);
 
         if ((positions[startPoint] - positions[endPoint]).x <= 0)
         {
@@ -185,7 +185,7 @@ public class BulletController : MonoBehaviour {
         yield return new WaitForSeconds(startTime);
 
         chaseClones[chaseCounter] = Instantiate(chase, positions[startPoint], transform.rotation);
-        chaseDestinations[chaseCounter] = ((Vector2) player.transform.position - positions[startPoint]).normalized * 512f;
+        chaseDestinations[chaseCounter] = ((Vector2) player.transform.position - positions[startPoint]).normalized * 1024f;
 
         if ((positions[startPoint] - chaseDestinations[chaseCounter]).x <= 0)
         {
@@ -208,8 +208,6 @@ public class BulletController : MonoBehaviour {
                 stakeClones[i].transform.position = Vector2.MoveTowards(stakeClones[i].transform.position, positions[stakeDestinations[i]], Time.deltaTime * 200);
             }
         }
-
-        // Moving spike
         for (int i = 0; i < spikeCounter; i++)
         {
             if (spikeClones[i] != null)
@@ -218,13 +216,29 @@ public class BulletController : MonoBehaviour {
             }
         }
 
-        // Moving chase
-        for (int i = 0; i < chaseCounter; i++)
+        // Moving curse
+        /*
+        for (int i = 0; i < cursepositions.Length; i++)
         {
-            if (chaseClones[i] != null)
-            {
-                chaseClones[i].transform.position = Vector2.MoveTowards(chaseClones[i].transform.position, chaseDestinations[i], Time.deltaTime * 200);
+
+        }
+
+        // Moving spike
+        for (int i = 0; i < spikepositions.Length; i++)
+        {
+            if (spikeClones[i] != null) {
+                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 300);
             }
         }
+
+        for (int i = 0; i < stakeEndingPositions.Length; i++) {
+            if (stakeClones [i] != null) {
+                Vector2 pos = stakeClones [i].transform.position;
+                if (pos == stakeEndingPositions [i]) {
+                    stakeClones [i].tag = "bulletStationary";
+                }
+            }
+        }
+        */
     }
-}
+    }

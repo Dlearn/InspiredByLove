@@ -23,10 +23,28 @@ public class GameController : MonoBehaviour
 
     public System.String lovequote;
 	public AudioClip endSound;
+	public AudioClip bgSound1;
+	public AudioClip bgSound2;
+	public AudioClip bgSound3;
+	private AudioSource audio;
 
     // Use this for initialization
     void Start()
     {
+
+		audio = GetComponent<AudioSource>();
+		AudioClip now;
+		int count = Random.Range (1, 3);
+		if (count == 1) {
+			now = bgSound1;
+		} else if (count == 2) {
+			now = bgSound2;
+		} else {
+			now = bgSound3;
+		}
+		audio.clip = now;
+		audio.Play ();
+
         score = 0;
         gameOver = false;
         restart = false;
@@ -98,7 +116,6 @@ public class GameController : MonoBehaviour
         GameObject background = GameObject.FindGameObjectWithTag("Background");
         gameOverText.text = "Game Over!";
         SpriteRenderer sr = background.GetComponent<SpriteRenderer>();
-		AudioSource audio = GetComponent<AudioSource>();
 		audio.Stop ();
 		audio.clip = endSound;
 		audio.Play ();

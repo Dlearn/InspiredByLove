@@ -5,6 +5,8 @@ using UnityEngine;
 public class BuddyController : MonoBehaviour {
 
 	// Use this for initialization
+	public AudioClip clip1;
+	AudioSource audio;
 	private float x,y;
 	public float speed = 1;
 	private int counter;
@@ -15,7 +17,8 @@ public class BuddyController : MonoBehaviour {
 		//x = -1;
 		//y = -1;
 		//polarity = -1;
-		
+		GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+		audio = camera.GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -43,7 +46,10 @@ public class BuddyController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.CompareTag("bullet"))
-		{
+		{	
+			audio.Stop ();
+			audio.clip = clip1;
+			audio.PlayOneShot (clip1, 0.1f);
 			Destroy (other.gameObject);
 		}
 	}
