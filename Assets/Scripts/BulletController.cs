@@ -99,12 +99,13 @@ public class BulletController : MonoBehaviour {
         for (int i = 0; i < 5; i++) {
             StartCoroutine(InstantiateSpike(7+i, 2*i + 18, 2*i + 17));
         }
-        */        
-        
+        */
+
         for (int i = 0; i < 11; i++)
         {
             StartCoroutine(InstantiateChase(i / 2f + 3, i));
         }
+        
     }
 
     private void Spiral(float startTime)
@@ -139,7 +140,22 @@ public class BulletController : MonoBehaviour {
     {
         for (int i = 0; i < 5; i++)
         {
-            StartCoroutine(InstantiateStake(startTime, 0, 30));
+            StartCoroutine(InstantiateStake(startTime, 14, 13));
+            StartCoroutine(InstantiateStake(startTime, 17, 18));
+            StartCoroutine(InstantiateStake(startTime, 22, 21));
+            StartCoroutine(InstantiateStake(startTime, 25, 24));
+            StartCoroutine(InstantiateStake(startTime + 2, 0, 39));
+            StartCoroutine(InstantiateStake(startTime + 2, 39, 0));
+            StartCoroutine(InstantiateStake(startTime + 2, 29, 10));
+            StartCoroutine(InstantiateStake(startTime + 2, 10, 29));
+            StartCoroutine(InstantiateStake(startTime + 4, 32, 31));
+            StartCoroutine(InstantiateStake(startTime + 4, 36, 7));
+            StartCoroutine(InstantiateStake(startTime + 6, 34, 5));
+            StartCoroutine(InstantiateStake(startTime + 6, 5, 34));
+            StartCoroutine(InstantiateStake(startTime + 8, 30, 1));
+            StartCoroutine(InstantiateStake(startTime + 8, 33, 4));
+            StartCoroutine(InstantiateStake(startTime + 8, 35, 6));
+            StartCoroutine(InstantiateStake(startTime + 8, 38, 9));
         }
     }
 
@@ -185,7 +201,7 @@ public class BulletController : MonoBehaviour {
         yield return new WaitForSeconds(startTime);
 
         chaseClones[chaseCounter] = Instantiate(chase, positions[startPoint], transform.rotation);
-        chaseDestinations[chaseCounter] = ((Vector2) player.transform.position - positions[startPoint]).normalized * 1024f;
+        chaseDestinations[chaseCounter] = ((Vector2) player.transform.position - positions[startPoint]).normalized * 512f;
 
         if ((positions[startPoint] - chaseDestinations[chaseCounter]).x <= 0)
         {
@@ -215,22 +231,7 @@ public class BulletController : MonoBehaviour {
                 spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, positions[spikeDestinations[i]], Time.deltaTime * 200);
             }
         }
-
-        // Moving curse
         /*
-        for (int i = 0; i < cursepositions.Length; i++)
-        {
-
-        }
-
-        // Moving spike
-        for (int i = 0; i < spikepositions.Length; i++)
-        {
-            if (spikeClones[i] != null) {
-                spikeClones[i].transform.position = Vector2.MoveTowards(spikeClones[i].transform.position, spikeEndingPositions[i], Time.deltaTime * 300);
-            }
-        }
-
         for (int i = 0; i < stakeEndingPositions.Length; i++) {
             if (stakeClones [i] != null) {
                 Vector2 pos = stakeClones [i].transform.position;
