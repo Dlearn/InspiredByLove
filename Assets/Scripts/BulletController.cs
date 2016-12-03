@@ -38,6 +38,7 @@ public class BulletController : MonoBehaviour {
     float WIDTH = 1024;
 
     Vector2[] positions;
+    int roundsPassed;
 
     void Start() {
 		GameObject camera = GameObject.FindGameObjectWithTag ("MainCamera");
@@ -73,6 +74,7 @@ public class BulletController : MonoBehaviour {
          * */
 
         positions = new Vector2[40];
+        roundsPassed = 0;
         for (int i = 0; i < 11; i++)
         {
             // Top row positions
@@ -100,7 +102,6 @@ public class BulletController : MonoBehaviour {
             StartCoroutine(InstantiateSpike(7+i, 2*i + 18, 2*i + 17));
         }
         */
-        TopSqueeze(0);
     }
 
     private void Spiral(float startTime)
@@ -244,7 +245,7 @@ public class BulletController : MonoBehaviour {
         yield return new WaitForSeconds(startTime);
 
         chaseClones[chaseCounter] = Instantiate(chase, positions[startPoint], transform.rotation);
-        chaseDestinations[chaseCounter] = ((Vector2) player.transform.position - positions[startPoint]).normalized * 512f;
+        chaseDestinations[chaseCounter] = ((Vector2) player.transform.position - positions[startPoint]).normalized * 1024;
 
 		audio.PlayOneShot (impact, 0.5f);
         if ((positions[startPoint] - chaseDestinations[chaseCounter]).x <= 0)
