@@ -43,8 +43,6 @@ public class BulletController : MonoBehaviour {
 		GameObject camera = GameObject.FindGameObjectWithTag ("MainCamera");
 		audio = camera.GetComponent<AudioSource> ();
 
-    void Start()
-    {
         stakeCounter = 0;
         stakeClones = new GameObject[999];
         stakeDestinations = new int[999];
