@@ -100,7 +100,7 @@ public class BulletController : MonoBehaviour {
             StartCoroutine(InstantiateSpike(7+i, 2*i + 18, 2*i + 17));
         }
         */
-        DoubleUp(0);
+        TopSqueeze(0);
     }
 
     private void Spiral(float startTime)
@@ -119,6 +119,26 @@ public class BulletController : MonoBehaviour {
         {
             StartCoroutine(InstantiateStake(2 * i + startTime + 2, 2 * i + 11, 31 + i));
             StartCoroutine(InstantiateStake(2 * i + startTime + 2, 2 * i + 12, 37 - i));
+        }
+    }
+
+    private void TopSqueeze(float startTime)
+    {
+        StartCoroutine(InstantiateStake(startTime, 39, 9));
+        StartCoroutine(InstantiateStake(startTime, 29, 1));
+        for (int i = 1; i < 5; i++)
+        {
+            StartCoroutine(InstantiateStake(2 * i + startTime, 29 - 2 * i, 1 + i));
+            StartCoroutine(InstantiateStake(2 * i + startTime, 30 - 2 * i, 9 - i));
+        }
+    }
+
+    private void BotStab(float startTime)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 28 - 2 * i, 27 - 2 * i));
+            StartCoroutine(InstantiateSpike(2 * i + startTime, 27 - 2 * i, 28 - 2 * i));
         }
     }
 
