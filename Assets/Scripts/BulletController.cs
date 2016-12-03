@@ -111,7 +111,7 @@ public class BulletController : MonoBehaviour {
         }
     }
 
-    private void BoxSqueeze(float startTime)
+    private void BotSqueeze(float startTime)
     {
         StartCoroutine(InstantiateStake(startTime, 0, 30));
         StartCoroutine(InstantiateStake(startTime, 10, 38));
