@@ -102,6 +102,98 @@ public class BulletController : MonoBehaviour {
             StartCoroutine(InstantiateSpike(7+i, 2*i + 18, 2*i + 17));
         }
         */
+		BotSqueeze(0);
+		TopStab (0);
+		Spiral (5);
+
+		for (int i = 0; i < 1000; i++) {
+			int fst = Random.Range (1, 8);
+			int snd = Random.Range (1, 8);
+			int thd = Random.Range (1, 8);
+			if (i % 5 != 0) {
+				continue;
+			}
+			switch (fst) {
+			case 1:
+				Spiral (10 + i * 2);
+				break;
+			case 2:
+				DoubleUp (10 + i * 2);
+				break;
+			case 3:
+				BotSqueeze (10 + i * 2);
+				break;
+			case 4:
+				TopStab (10 + i * 2);
+				break;
+			case 5:
+				AdvancedBox (10 + i * 2);
+				break;
+			case 6:
+				LineOfChasers (10 + i * 2);
+				break;
+			case 7:
+				TopSqueeze (10 + i * 2);
+				break;
+			case 8:
+				BotStab (10 + i * 2);
+				break;
+			}
+
+			switch (thd) {
+			case 1:
+				Spiral (10 + i * 2);
+				break;
+			case 2:
+				DoubleUp (10 + i * 2);
+				break;
+			case 3:
+				BotSqueeze (10 + i * 2);
+				break;
+			case 4:
+				TopStab (10 + i * 2);
+				break;
+			case 5:
+				AdvancedBox (10 + i * 2);
+				break;
+			case 6:
+				LineOfChasers (10 + i * 2);
+				break;
+			case 7:
+				TopSqueeze (10 + i * 2);
+				break;
+			case 8:
+				BotStab (10 + i * 2);
+				break;
+			}
+
+			switch (snd) {
+			case 1:
+				Spiral (10 + i * 2);
+				break;
+			case 2:
+				DoubleUp (10 + i * 2);
+				break;
+			case 3:
+				BotSqueeze (10 + i * 2);
+				break;
+			case 4:
+				TopStab (10 + i * 2);
+				break;
+			case 5:
+				AdvancedBox (10 + i * 2);
+				break;
+			case 6:
+				LineOfChasers (10 + i * 2);
+				break;
+			case 7:
+				TopSqueeze (10 + i * 2);
+				break;
+			case 8:
+				BotStab (10 + i * 2);
+				break;
+			}
+		}
     }
 
     private void Spiral(float startTime)
@@ -227,7 +319,7 @@ public class BulletController : MonoBehaviour {
         // Bulletpool code
         spikeClones[spikeCounter] = Instantiate(spike, positions[startPoint], transform.rotation);
         spikeDestinations[spikeCounter] = endPoint;
-		audio.PlayOneShot (spikeSound, 0.5f);
+		audio.PlayOneShot (spikeSound, 0.01f);
 
         if ((positions[startPoint] - positions[endPoint]).x <= 0)
         {
