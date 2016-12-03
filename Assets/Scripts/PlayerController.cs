@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public float testing;
     public GameObject buddy;
 
+	private float width = 16f;
+
     void Start()
     {
 
@@ -46,14 +48,14 @@ public class PlayerController : MonoBehaviour
         float dist = (temp).magnitude;
         finalV = mousePos;
 		//Debug.Log (mousePos);
-		finalV.x = Mathf.Clamp (finalV.x, -512+32, 512-32);
-		finalV.y = Mathf.Clamp (finalV.y, -384+32, 384-32);
+		finalV.x = Mathf.Clamp (finalV.x, -512+width, 512-width);
+		finalV.y = Mathf.Clamp (finalV.y, -384+width, 384-width);
 		if (dist >= radius)
         {
             // distance between the mouse ptr and buddy exceeds radius
             // set the new ptr to within radius
-			finalV.x = Mathf.Clamp((buddyPos.x + (temp.x / dist) * radius), -512+32, 512-32);
-			finalV.y = Mathf.Clamp((buddyPos.y + (temp.y / dist) * radius), -384+32, 384-32);
+			finalV.x = Mathf.Clamp((buddyPos.x + (temp.x / dist) * radius), -512+width, 512-width);
+			finalV.y = Mathf.Clamp((buddyPos.y + (temp.y / dist) * radius), -384+width, 384-width);
         }
 
         transform.position = finalV;
