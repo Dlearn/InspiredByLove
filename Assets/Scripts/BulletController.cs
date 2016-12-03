@@ -127,7 +127,8 @@ public class BulletController : MonoBehaviour {
         // Bulletpool code
         stakeClones[stakeCounter] = Instantiate(stake, positions[startPoint], transform.rotation);
         stakeDestinations[stakeCounter] = endPoint;
-		audio.PlayOneShot (stackLanded, 1.0f);
+		//stakeClones [stakeCounter].transform.localScale += new Vector3 (0, 1, 0);
+		audio.PlayOneShot (stackLanded, 0.5f);
         if ((positions[startPoint] - positions[endPoint]).x <= 0) {
             stakeClones[stakeCounter].transform.Rotate(new Vector3(0f, 0f, Vector2.Angle(positions[startPoint] - positions[endPoint], Vector2.up)));
         }
@@ -144,7 +145,7 @@ public class BulletController : MonoBehaviour {
         // Bulletpool code
         spikeClones[spikeCounter] = Instantiate(spike, positions[startPoint], transform.rotation);
         spikeDestinations[spikeCounter] = endPoint;
-		audio.PlayOneShot (spikeSound, 1);
+		audio.PlayOneShot (spikeSound, 0.5f);
 
         if ((positions[startPoint] - positions[endPoint]).x <= 0)
         {
